@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using ConsoleGUI;
+﻿using ConsoleGUI;
 using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 
@@ -10,7 +9,9 @@ public class DrawingBoard : Grid
     public DrawingBoard()
     {
         Color = Color.SlateGray;
+        VerticalAlignment = VerticalAlignment.Bottom;
 
+        Columns.Add(new Column());
         Columns.Add(new Column());
         Columns.Add(new Column());
         Rows.Add(new Row());
@@ -25,7 +26,7 @@ public class DrawingBoard : Grid
             DrawingBoard = this
         };
         SetColumnAndRow(Canvas, 0, 1);
-        SetColumnSpanAndRowSpan(Canvas, 2, 1);
+        SetColumnSpanAndRowSpan(Canvas, 3, 1);
 
         var colors = new List<Color>
         {
@@ -54,12 +55,26 @@ public class DrawingBoard : Grid
             ColorCellSize = (4, 2)
         };
         SetColumnAndRow(SelectedColorsDisplay, 0, 0);
+
+        DrawingModeSelector = new DrawingModeSelector
+        {
+            DrawingBoard = this
+        };
+        SetColumnAndRow(DrawingModeSelector, 2, 0);
     }
 
     public ColorPicker ColorPicker { get; }
     public Canvas Canvas { get; }
     public SelectedColorsDisplay SelectedColorsDisplay { get; }
+    public DrawingModeSelector DrawingModeSelector { get; }
 
     public Color PrimaryColor { get; set; } = Color.Black;
     public Color SecondaryColor { get; set; } = Color.White;
+    public DrawMode DrawMode { get; set; } = DrawMode.Pen;
+}
+
+public enum DrawMode
+{
+    Pen,
+    Fill
 }

@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using ConsoleGUI;
+﻿using ConsoleGUI;
 using ConsoleGUI.ConsoleDisplay;
 using ConsoleGUI.UI;
 using ConsoleGUI.UI.Events;
@@ -9,9 +8,10 @@ namespace WaveFunctionCollapse;
 public class ColorPicker : Control
 {
     public ColorPicker() => ShowFocusedBorder = false;
-    public List<Color> Colors { get; set; } = new();
+    
     public Vector ColorCellSize { get; set; } = new(2, 2);
     public int ColorRows { get; set; } = 2;
+    public List<Color> Colors { get; set; } = new();
     public Color PrimaryColor { get; private set; } = Color.Black;
     public Color SecondaryColor { get; private set; } = Color.White;
 
