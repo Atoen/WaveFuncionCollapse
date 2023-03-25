@@ -1,23 +1,22 @@
-﻿using ConsoleGUI;
-using ConsoleGUI.UI.Widgets;
+﻿using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 
-namespace WaveFunctionCollapse;
+namespace WaveFunctionCollapse.UI;
 
 public class DrawingBoard : Grid
 {
-    public DrawingBoard()
+    public DrawingBoard(int width, int height)
     {
         Color = Color.SlateGray;
-        VerticalAlignment = VerticalAlignment.Bottom;
+        VerticalAlignment = VerticalAlignment.Top;
+        HorizontalAlignment = HorizontalAlignment.Left;
 
-        Columns.Add(new Column());
         Columns.Add(new Column());
         Columns.Add(new Column());
         Rows.Add(new Row());
         Rows.Add(new Row());
 
-        Canvas = new Canvas(new Vector(30, 20))
+        Canvas = new InputCanvas(width, height)
         {
             BorderStyle = BorderStyle.Rounded,
             BorderColor = Color.Black,
@@ -25,21 +24,23 @@ public class DrawingBoard : Grid
 
             DrawingBoard = this
         };
-        SetColumnAndRow(Canvas, 0, 1);
-        SetColumnSpanAndRowSpan(Canvas, 3, 1);
+        SetColumnAndRow(Canvas, 1, 1);
 
         var colors = new List<Color>
         {
-            Color.Black, Color.Gray, Color.Red, Color.Orange, Color.Yellow, Color.Green,
-            Color.LightSkyBlue, Color.Blue, Color.Purple,
-            Color.White, Color.LightGray, Color.Brown, Color.Pink, Color.Lime
+            Color.Red, Color.Yellow, Color.Orange,
+            Color.Blue, Color.Green, Color.Purple,
+            Color.Brown, Color.Olive, Color.Tan,
+            Color.Navy, Color.SeaGreen, Color.SkyBlue,
+            Color.LightPink, Color.Lavender, Color.Coral,
+            Color.White, Color.Gray, Color.Black
         };
 
         ColorPicker = new ColorPicker
         {
             Colors = colors,
             ColorCellSize = (3, 2),
-            ColorRows = 2,
+            ColorRows = 6,
 
             BorderStyle = BorderStyle.Rounded,
             BorderColor = Color.Black,
@@ -47,7 +48,7 @@ public class DrawingBoard : Grid
 
             DrawingBoard = this
         };
-        SetColumnAndRow(ColorPicker, 1, 0);
+        SetColumnAndRow(ColorPicker, 0, 1);
 
         SelectedColorsDisplay = new SelectedColorsDisplay
         {
@@ -60,11 +61,11 @@ public class DrawingBoard : Grid
         {
             DrawingBoard = this
         };
-        SetColumnAndRow(DrawingModeSelector, 2, 0);
+        SetColumnAndRow(DrawingModeSelector, 1, 0);
     }
 
     public ColorPicker ColorPicker { get; }
-    public Canvas Canvas { get; }
+    public InputCanvas Canvas { get; }
     public SelectedColorsDisplay SelectedColorsDisplay { get; }
     public DrawingModeSelector DrawingModeSelector { get; }
 

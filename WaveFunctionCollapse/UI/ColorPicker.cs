@@ -3,12 +3,12 @@ using ConsoleGUI.ConsoleDisplay;
 using ConsoleGUI.UI;
 using ConsoleGUI.UI.Events;
 
-namespace WaveFunctionCollapse;
+namespace WaveFunctionCollapse.UI;
 
 public class ColorPicker : Control
 {
     public ColorPicker() => ShowFocusedBorder = false;
-    
+
     public Vector ColorCellSize { get; set; } = new(2, 2);
     public int ColorRows { get; set; } = 2;
     public List<Color> Colors { get; set; } = new();

@@ -1,5 +1,5 @@
 ﻿using ConsoleGUI;
-using WaveFunctionCollapse;
+using WaveFunctionCollapse.UI;
 
 var asked = false;
 Input.ControlC += delegate
@@ -14,6 +14,6 @@ Input.ControlC += delegate
 
 Application.Start();
 
-Input.TreatControlCAsInput = false;
+Input.TreatControlCAsInput = true;
 
 MainMenu.Show();

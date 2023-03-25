@@ -2,7 +2,7 @@
 using ConsoleGUI.ConsoleDisplay;
 using ConsoleGUI.UI;
 
-namespace WaveFunctionCollapse;
+namespace WaveFunctionCollapse.UI;
 
 public class SelectedColorsDisplay : Control
 {
