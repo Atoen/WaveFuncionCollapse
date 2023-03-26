@@ -12,6 +12,13 @@ public class InputCanvas : Canvas
 
     public required DrawingBoard DrawingBoard { get; set; }
 
+    protected override void OnMouseMiddleDown(MouseEventArgs e)
+    {
+        if (!IsCorrectDrawPosition(e.RelativeCursorPosition)) return;
+
+        DrawingBoard.PrimaryColor = Buffer[e.RelativeCursorPosition - InnerPadding].Bg;
+    }
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         if (!InResizeMode) Draw(e);
@@ -21,18 +28,16 @@ public class InputCanvas : Canvas
 
     private void Draw(MouseEventArgs e)
     {
-        var clickPos = e.RelativeCursorPosition - InnerPadding;
-
-        if (clickPos.X < Buffer.Size.X && clickPos.Y < Buffer.Size.Y &&
-            clickPos is {X: >= 0, Y: >= 0})
-        {
-            Draw(e, clickPos);
-        }
+        if (!IsCorrectDrawPosition(e.RelativeCursorPosition)) return;
+        
+        ColorPixel(e);
     }
 
-    private void Draw(MouseEventArgs e, Vector clickPos)
+    private void ColorPixel(MouseEventArgs e)
     {
         Color color;
+
+        var pixelPos = e.RelativeCursorPosition - InnerPadding;
 
         if (e.LeftButton == MouseButtonState.Pressed)
         {
@@ -49,11 +54,11 @@ public class InputCanvas : Canvas
         switch (DrawingBoard.DrawMode)
         {
             case DrawMode.Pen:
-                Buffer[clickPos].Bg = color;
+                Buffer[pixelPos].Bg = color;
                 return;
 
             case DrawMode.Fill:
-                Fill(clickPos, color);
+                Fill(pixelPos, color);
                 break;
 
             default:

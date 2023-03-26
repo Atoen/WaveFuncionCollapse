@@ -53,7 +53,7 @@ public class DrawingBoard : Grid
         SelectedColorsDisplay = new SelectedColorsDisplay
         {
             DrawingBoard = this,
-            ColorCellSize = (4, 2)
+            ColorCellSize = (4, 3)
         };
         SetColumnAndRow(SelectedColorsDisplay, 0, 0);
 
