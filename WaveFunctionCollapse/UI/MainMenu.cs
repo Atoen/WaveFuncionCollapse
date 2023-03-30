@@ -1,5 +1,7 @@
-﻿using ConsoleGUI;
+﻿using System.Diagnostics;
+using ConsoleGUI;
 using ConsoleGUI.UI;
+using ConsoleGUI.UI.Events;
 using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 using ConsoleGUI.Visuals.Figlet;
@@ -15,40 +17,50 @@ public class MainMenu
         {
             Color = Color.SlateGray,
             VerticalAlignment = VerticalAlignment.Top,
-            HorizontalAlignment = HorizontalAlignment.Left
+            HorizontalAlignment = HorizontalAlignment.Left,
+            ShowGridLines = true,
+            GridLineStyle = GridLineStyle.SingleBold
         };
 
         mainGrid.Columns.Add(new Column());
         mainGrid.Columns.Add(new Column());
         mainGrid.Columns.Add(new Column());
+
         mainGrid.Rows.Add(new Row());
         mainGrid.Rows.Add(new Row());
 
         _drawingBoard = new DrawingBoard(20, 12)
         {
             Color = Color.Empty,
-            InnerPadding = Vector.Zero
+            InnerPadding = (1, 0)
         };
-        
+
         mainGrid.SetColumnAndRow(_drawingBoard, 0, 0);
         mainGrid.SetColumnSpanAndRowSpan(_drawingBoard, 1, 1);
 
         var generateButton = new Button
         {
-            Text = new BigText("generate", Font.CalvinS)
+            Text = new BigText("generate".ToLower(), Font.CalvinS)
         };
         mainGrid.SetColumnAndRow(generateButton, 0, 1);
+        mainGrid.SetColumnSpanAndRowSpan(generateButton, 2, 1);
 
-        _resultDisplay = new Canvas(30, 20);
+        _resultDisplay = new Canvas(30, 20)
+        {
+            CanGripResize = true,
+            OuterPadding = (1, 0)
+        };
         mainGrid.SetColumnAndRow(_resultDisplay, 2, 0);
         mainGrid.SetColumnSpanAndRowSpan(_resultDisplay, 1, 2);
 
         var modelOptionsGrid = new Grid
         {
             Color = Color.Empty,
-            InnerPadding = Vector.Zero
+            InnerPadding = (1, 0),
+            ShowGridLines = true,
+            GridLineStyle = GridLineStyle.Dashed
         };
-        
+
         modelOptionsGrid.Columns.Add(new Column());
         modelOptionsGrid.Rows.Add(new Row());
         modelOptionsGrid.Rows.Add(new Row());
@@ -79,7 +91,7 @@ public class MainMenu
             ToggleManager = new ToggleStateManager<bool>("Periodic Output", true, false)
         };
         modelOptionsGrid.SetColumnAndRow(periodicOutputToggleButton, 0, 3);
-        
+
         mainGrid.SetColumnAndRow(modelOptionsGrid, 1, 0);
 
         generateButton.OnClick = SetUpModel;
@@ -101,7 +113,7 @@ public class MainMenu
 
     public static void Show() => _instance ??= new MainMenu();
 
-    private void OverlappingModel(PixelBuffer inputBuffer, bool ground, int symmetry, bool periodicInput, bool periodic)
+    private void OverlappingModel(PixelBuffer inputBuffer, bool ground, int symmetry, bool periodicInput, bool periodicOutput)
     {
         var dataArray = new int[inputBuffer.Size.X * inputBuffer.Size.Y];
 
@@ -116,7 +128,7 @@ public class MainMenu
         var input = new InputArray(inputBuffer.Size.X, inputBuffer.Size.Y, dataArray);
 
         var model = new OverlappingModel.OverlappingModel(input, 5, _resultDisplay.Buffer.Size.X,
-            _resultDisplay.Buffer.Size.Y, periodicInput: periodicInput, periodic: periodic,
+            _resultDisplay.Buffer.Size.Y, periodicInput: periodicInput, periodic: periodicOutput,
             symmetry: symmetry, ground: ground, heuristic: Model.Heuristic.Entropy);
 
         var seed = Random.Shared.Next();

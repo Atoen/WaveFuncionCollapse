@@ -21,7 +21,12 @@ public class InputCanvas : Canvas
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        if (!InResizeMode) Draw(e);
+        if (!InResizeMode &&
+            e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
+        {
+            DisplayingGrip = false;
+            Draw(e);
+        }
 
         base.OnMouseMove(e);
     }
@@ -29,7 +34,7 @@ public class InputCanvas : Canvas
     private void Draw(MouseEventArgs e)
     {
         if (!IsCorrectDrawPosition(e.RelativeCursorPosition)) return;
-        
+
         ColorPixel(e);
     }
 
@@ -55,7 +60,7 @@ public class InputCanvas : Canvas
         {
             case DrawMode.Pen:
                 Buffer[pixelPos].Bg = color;
-                return;
+                break;
 
             case DrawMode.Fill:
                 Fill(pixelPos, color);

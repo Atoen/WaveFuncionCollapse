@@ -1,4 +1,6 @@
-﻿using ConsoleGUI.UI.Widgets;
+﻿using ConsoleGUI.UI;
+using ConsoleGUI.UI.Events;
+using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 
 namespace WaveFunctionCollapse.UI;
@@ -21,6 +23,7 @@ public class DrawingBoard : Grid
             BorderStyle = BorderStyle.Rounded,
             BorderColor = Color.Black,
             ShowBorder = true,
+            CanGripResize = true,
 
             DrawingBoard = this
         };
