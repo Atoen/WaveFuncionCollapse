@@ -1,6 +1,4 @@
-﻿using ConsoleGUI.UI;
-using ConsoleGUI.UI.Events;
-using ConsoleGUI.UI.Widgets;
+﻿using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 
 namespace WaveFunctionCollapse.UI;

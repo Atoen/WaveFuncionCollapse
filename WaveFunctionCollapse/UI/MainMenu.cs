@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using ConsoleGUI;
-using ConsoleGUI.UI;
-using ConsoleGUI.UI.Events;
+﻿using ConsoleGUI.UI;
 using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 using ConsoleGUI.Visuals.Figlet;
@@ -40,7 +37,7 @@ public class MainMenu
 
         var generateButton = new Button
         {
-            Text = new BigText("generate".ToLower(), Font.CalvinS)
+            Text = new BigText("generate", Font.CalvinS)
         };
         mainGrid.SetColumnAndRow(generateButton, 0, 1);
         mainGrid.SetColumnSpanAndRowSpan(generateButton, 2, 1);
@@ -48,7 +45,8 @@ public class MainMenu
         _resultDisplay = new Canvas(30, 20)
         {
             CanGripResize = true,
-            OuterPadding = (1, 0)
+            OuterPadding = (1, 0),
+            MinBufferSize = (10, 10)
         };
         mainGrid.SetColumnAndRow(_resultDisplay, 2, 0);
         mainGrid.SetColumnSpanAndRowSpan(_resultDisplay, 1, 2);
