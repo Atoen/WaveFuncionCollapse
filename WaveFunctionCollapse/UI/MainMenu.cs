@@ -1,4 +1,5 @@
 ﻿using ConsoleGUI.UI;
+using ConsoleGUI.UI.Events;
 using ConsoleGUI.UI.Widgets;
 using ConsoleGUI.Visuals;
 using ConsoleGUI.Visuals.Figlet;
@@ -71,6 +72,14 @@ public class MainMenu
         };
         groundToggleButton.Select(false);
         modelOptionsGrid.SetColumnAndRow(groundToggleButton, 0, 0);
+        
+        groundToggleButton.MouseMove += delegate(Control sender, MouseEventArgs args)
+        {
+            if (args.LeftButton == MouseButtonState.Pressed)
+            {
+                groundToggleButton.Center = args.CursorPosition;
+            }
+        };
 
         var symmetryToggleButton = new ToggleButton<int>
         {
